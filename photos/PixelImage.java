@@ -22,8 +22,8 @@ class PixelImage {
         return path;
     }
 
-    float distance(Signature sig) {
-        if (broken) return Integer.MAX_VALUE;
+    double distance(Signature sig) {
+        if (broken) return Double.MAX_VALUE;
         try {
             return signature.get().distance(sig);
         } catch (Exception ex) {
@@ -31,7 +31,11 @@ class PixelImage {
                 ex.printStackTrace();
                 broken = true;
             }
-            return Integer.MAX_VALUE;
+            return Double.MAX_VALUE;
         }
+    }
+
+    public String toString() {
+        return getPath().toString();
     }
 }

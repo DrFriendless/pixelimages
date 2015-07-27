@@ -28,14 +28,21 @@ public class Main {
         BufferedImage mainImage = ImageTools.readImage(mainImagePath);
         // maintain the aspect ratio
         int resultHeight = resultWidth * mainImage.getHeight() / mainImage.getWidth();
-//        process(mainImage, xImages, yImages, resultWidth, resultHeight, mainImagePath,
-//                new SignatureFactory(OrthogonalRGBSignature.class), "orthrgb", imageDir);
-//        process(mainImage, xImages, yImages, resultWidth, resultHeight, mainImagePath,
-//                new SignatureFactory(OrthogonalHSBSignature.class), "orthhsb", imageDir);
-//        process(mainImage, xImages, yImages, resultWidth, resultHeight, mainImagePath,
-//                new SignatureFactory(EuclideanRGBSignature.class), "eucrgb", imageDir);
-//        process(mainImage, xImages, yImages, resultWidth, resultHeight, mainImagePath,
-//                new SignatureFactory(EuclideanHSBSignature.class), "euchsb", imageDir);
+
+        process(mainImage, xImages, yImages, resultWidth, resultHeight, mainImagePath,
+                new SignatureFactory(OrthogonalYCbCrSignature.class), "orthycbcr", imageDir);
+        process(mainImage, xImages, yImages, resultWidth, resultHeight, mainImagePath,
+                new SignatureFactory(EuclideanYCbCrSignature.class), "eucycbcr", imageDir);
+        process(mainImage, xImages, yImages, resultWidth, resultHeight, mainImagePath,
+                new SignatureFactory(OrthogonalRGBSignature.class), "orthrgb", imageDir);
+        process(mainImage, xImages, yImages, resultWidth, resultHeight, mainImagePath,
+                new SignatureFactory(OrthogonalHSBSignature.class), "orthhsb", imageDir);
+        process(mainImage, xImages, yImages, resultWidth, resultHeight, mainImagePath,
+                new SignatureFactory(EuclideanRGBSignature.class), "eucrgb", imageDir);
+        process(mainImage, xImages, yImages, resultWidth, resultHeight, mainImagePath,
+                new SignatureFactory(EuclideanMultidimensionalRGBSignature.class), "eucmultirgb", imageDir);
+        process(mainImage, xImages, yImages, resultWidth, resultHeight, mainImagePath,
+                new SignatureFactory(EuclideanHSBSignature.class), "euchsb", imageDir);
         process(mainImage, xImages, yImages, resultWidth, resultHeight, mainImagePath,
                 new SignatureFactory(CustomHSBSignature.class), "custhsb", imageDir);
         System.exit(0);
@@ -73,7 +80,7 @@ public class Main {
                 Optional<EvaluatedPixelImage> best = pixelImages.
                         parallelStream().
                         map(img -> new EvaluatedPixelImage(img, img.distance(sampleSig))).
-                        min((i1, i2) -> Float.compare(i1.getScore(), i2.getScore()));
+                        min((i1, i2) -> Double.compare(i1.getScore(), i2.getScore()));
                 if (best.isPresent()) {
                     int dx = x * resultWidth / xImages;
                     int dx1 = (x + 1) * resultWidth / xImages;

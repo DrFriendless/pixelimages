@@ -27,4 +27,9 @@ public class SignatureFactory<C extends Signature> {
             return null;
         }
     }
+
+    @Override
+    public String toString() {
+        return "SignatureFactory[" + constr + "]";
+    }
 }

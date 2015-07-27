@@ -10,5 +10,7 @@ package photos;
  * To change this template use File | Settings | File Templates.
  */
 abstract class Signature<T extends Signature> {
-    abstract float distance(T sig);
+    protected int[] bytes = new int[432];
+
+    abstract double distance(T sig);
 }
